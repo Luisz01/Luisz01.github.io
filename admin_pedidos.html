@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Visualizar Pedidos</title>
+    <script>
+        function carregarPedidos() {
+            const pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
+            const listaPedidos = document.getElementById('listaPedidos');
+            
+            listaPedidos.innerHTML = ''; // Limpa a lista de pedidos
+            
+            if (pedidos.length === 0) {
+                listaPedidos.innerHTML = "<p>Nenhum pedido foi feito.</p>";
+            } else {
+                pedidos.forEach((pedidoObj, index) => {
+                    if (pedidoObj.status !== "Entregue") {
+                        const pedidoDiv = document.createElement('div');
+                        pedidoDiv.classList.add('pedido');
+                        pedidoDiv.id = `pedido-${index}`; // Adiciona um id único para cada pedido
+
+                        let totalPedido = 25 * pedidoObj.numPessoas; // Valor inicial do pedido baseado no número de pessoas
+                        let conteudoPedido = `<h3>Pedido ${index + 1}</h3>`;
+                        
+                        pedidoObj.itens.forEach(item => {
+                            conteudoPedido += `
+                                <p>${item.nome} - Quantidade: ${item.quantidade} - Preço unitário: R$ ${item.preco.toFixed(2)} - Total: R$ ${item.total.toFixed(2)}</p>
+                            `;
+                            totalPedido += item.total; // Adiciona o total dos itens ao total do pedido
+                        });
+                        conteudoPedido += `<strong>Total do Pedido: R$ ${totalPedido.toFixed(2)}</strong><br>`;
+                        conteudoPedido += `<strong>Status: ${pedidoObj.status}</strong><br>`;
+                          conteudoPedido += `<p><strong>(25 reais por pessoa)</strong></p><hr>`;
+
+                        if (pedidoObj.status === "Pendente") {
+                            conteudoPedido += `
+                                <input type="checkbox" id="entregue-${index}" onchange="marcarComoEntregue(${index})">
+                                <label for="entregue-${index}">Marcar como Entregue</label>
+                            `;
+                        }
+
+                        conteudoPedido += `<p><strong>Mesa:</strong> ${pedidoObj.mesa}</p>`;
+                        conteudoPedido += `<p><strong>Número de Pessoas:</strong> ${pedidoObj.numPessoas}</p>`;
+                        
+                        pedidoDiv.innerHTML = conteudoPedido;
+                        listaPedidos.appendChild(pedidoDiv);
+                    }
+                });
+            }
+        }
+
+        function marcarComoEntregue(index) {
+            console.log('Marcando o pedido como entregue...');
+            let pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
+
+            // Remove o pedido específico da lista
+            pedidos.splice(index, 1);
+
+            // Atualiza o localStorage com os pedidos restantes
+            localStorage.setItem('pedidos', JSON.stringify(pedidos));
+
+            // Remove o pedido da interface
+            const pedidoDiv = document.getElementById(`pedido-${index}`);
+            if (pedidoDiv) {
+                pedidoDiv.remove();
+            }
+
+            // Recarregar a lista para atualizar os índices dos IDs dos pedidos restantes
+            carregarPedidos();
+        }
+
+        document.addEventListener('DOMContentLoaded', carregarPedidos);
+    </script>
+
+    <style>
+        .pedido {
+            border: 5px solid #0b0808;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 15px;
+            color: aliceblue;
+            background-color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Pedidos Realizados</h1>
+
+    
+    <div id="mesaInfo"></div>
+    
+    <div id="listaPedidos"></div>
+    <hr>
+    <button onclick="location.reload();">Clique aqui para ver se novos pedidos foram feitos</button>
+</body>
+</html>
