@@ -2,13 +2,10 @@
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cardápio</title>
-    <script src="JS/firebase.js"></script>
-    <script type="module" src="./JS/firebase.js"></script>
-
+    
     <script>
         function exibirDadosMesa() {
             const numMesa = sessionStorage.getItem("numMesa");
@@ -52,9 +49,7 @@
         }
 
         function salvarPedido() {
-            const numMesa = sessionStorage.getItem('numMesa');
-            const numPessoas = sessionStorage.getItem('numPessoas');
-
+            const pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
             const pratos = [
                 { checkbox: document.getElementById('churrasco'), quantidade: document.getElementById('quantidadeChurrasco'), nome: 'Churrasco', preco: 20 },
                 { checkbox: document.getElementById('mocoto'), quantidade: document.getElementById('quantidadeMocoto'), nome: 'Mocotó', preco: 20 },
@@ -83,29 +78,21 @@
             });
 
             if (pedidoAtual.length > 0) {
-                const pedido = {
-                    mesa: numMesa,
-                    numPessoas: numPessoas,
+                const numMesa = sessionStorage.getItem('numMesa');
+                const numPessoas = sessionStorage.getItem('numPessoas');
+
+                pedidos.push({
                     itens: pedidoAtual,
                     status: "Pendente",
-                    timestamp: Date.now() // Timestamp para identificar o pedido
-                };
-
-                // Salvar o pedido no Firebase
-                const db = getDatabase();
-                const pedidosRef = ref(db, 'pedidos/' + numMesa + '/' + pedido.timestamp);
-                set(pedidosRef, pedido)
-                    .then(() => {
-                        alert("Pedido salvo com sucesso no Firebase!");
-                    })
-                    .catch(error => {
-                        console.error("Erro ao salvar o pedido: ", error);
-                    });
+                    mesa: numMesa || "Desconhecida",
+                    numPessoas: numPessoas || "Desconhecido"
+                });
+                localStorage.setItem('pedidos', JSON.stringify(pedidos));
+                alert("Pedido salvo com sucesso!");
             } else {
                 alert("Nenhum prato selecionado.");
             }
         }
-
 
         function carregarStatusPedidos() {
             const pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
@@ -150,7 +137,7 @@
 </head>
 
 <body>
-
+   
     <h1>Cardápio</h1>
     <p id="infoMesa"></p>
     <hr>
@@ -234,4 +221,3 @@
 
 
 </html>
-       
