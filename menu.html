@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cardápio</title>
     <script src="JS/firebase.js"></script>
-    <script>import { db, ref, set } from "./JS/firebase.js"</script>
+    <script type="module" src="./JS/firebase.js"></script>
+
     <script>
         function exibirDadosMesa() {
             const numMesa = sessionStorage.getItem("numMesa");
@@ -233,3 +234,4 @@
 
 
 </html>
+       
