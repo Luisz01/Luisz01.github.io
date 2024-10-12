@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>primeira_pagina</title>
+    <script>
+        function salvarDados() {
+            const numMesa = document.getElementById("num").value;
+            const numPessoas = document.getElementById("numeroPess").value;
+
+            if (!numMesa || !numPessoas) {
+                alert("Por favor, preencha todos os campos.");
+                return false;
+            }
+
+            sessionStorage.setItem("numMesa", numMesa);
+            sessionStorage.setItem("numPessoas", numPessoas);
+
+            // Redirecionar para a página do menu
+            window.location.href = "menu.html";
+            return false; // Evita o envio do formulário padrão
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Bem-vindo</h1>
+    <p>Selecione o número da mesa</p>
+
+    <form onsubmit="return salvarDados()">
+        <select name="numeros" id="num" required>
+            <option selected disabled value=""></option>
+            <option value="01">01</option>
+            <option value="02">02</option>
+            <option value="03">03</option>
+            <option value="04">04</option>
+            <option value="05">05</option>
+            <option value="06">06</option>
+            <option value="07">07</option>
+        </select>
+
+        <br><br>
+        <a>Selecione o número de pessoas</a><br>
+        <input type="number" id="numeroPess" min="1" max="15" required><br><br>
+        <input type="submit" value="Enviar" required>
+    </form><br>
+
+</body>
+
+</html>

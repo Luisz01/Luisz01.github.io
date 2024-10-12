@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Pedidos</title>
+    <script src="JS/firebase.js"></script>
+    <script>
+    function carregarTodosPedidos() {
+    const todosPedidosDiv = document.getElementById('todosPedidos');
+    const pedidosRef = ref(db, 'pedidos');
+
+    onValue(pedidosRef, (snapshot) => {
+        todosPedidosDiv.innerHTML = ''; // Limpa o conteúdo anterior
+        const pedidos = snapshot.val();
+
+        if (!pedidos) {
+            todosPedidosDiv.innerHTML = "<p>Nenhum pedido foi feito.</p>";
+        } else {
+            Object.keys(pedidos).forEach(mesa => {
+                Object.keys(pedidos[mesa]).forEach(pedidoId => {
+                    const pedidoObj = pedidos[mesa][pedidoId];
+                    let conteudoPedido = `<h3>Pedido - Mesa ${pedidoObj.mesa} (${pedidoObj.numPessoas} pessoa(s))</h3>`;
+
+                    pedidoObj.itens.forEach(item => {
+                        conteudoPedido += `<p>${item.nome} - Quantidade: ${item.quantidade} - Preço total: R$ ${item.total.toFixed(2)}</p>`;
+                    });
+
+                    conteudoPedido += `<p><strong>Status:</strong> ${pedidoObj.status}</p>`;
+                    conteudoPedido += `<button onclick="marcarComoEntregue('${mesa}', '${pedidoId}')">Marcar como Entregue</button>`;
+                    todosPedidosDiv.innerHTML += `<div>${conteudoPedido}</div><hr>`;
+                });
+            });
+        }
+    });
+}
+
+function marcarComoEntregue(mesa, pedidoId) {
+    const pedidoRef = ref(db, 'pedidos/' + mesa + '/' + pedidoId);
+    
+    // Remove o pedido após marcar como entregue
+    remove(pedidoRef)
+        .then(() => {
+            alert("Pedido marcado como entregue.");
+            carregarTodosPedidos();
+        })
+        .catch(error => {
+            console.error("Erro ao remover o pedido: ", error);
+        });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    carregarTodosPedidos();
+    verificarAtualizacoes();
+});
+           
+        
+    </script>
+</head>
+
+<body>
+
+    </script>
+    <h1>Todos os Pedidos</h1>
+    <div id="todosPedidos"></div>
+    <hr>
+    <br><a href="menu.html">Voltar ao Cardápio</a>
+</body>
+
+</html>
