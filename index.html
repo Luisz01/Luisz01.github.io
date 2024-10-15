@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>primeira_pagina</title>
+    <link rel="stylesheet" < href="css/styles1.css">
+    </href>
+
+
     <script>
         function salvarDados() {
             const numMesa = document.getElementById("num").value;
@@ -26,26 +30,29 @@
 </head>
 
 <body>
-    <h1>Bem-vindo</h1>
-    <p>Selecione o número da mesa</p>
+    <div class="container">
+        <h1>Bem-vindo</h1><br>
+        <hr>
+        <p>Selecione o número da mesa</p><br>
 
-    <form onsubmit="return salvarDados()">
-        <select name="numeros" id="num" required>
-            <option selected disabled value=""></option>
-            <option value="01">01</option>
-            <option value="02">02</option>
-            <option value="03">03</option>
-            <option value="04">04</option>
-            <option value="05">05</option>
-            <option value="06">06</option>
-            <option value="07">07</option>
-        </select>
+        <form onsubmit="return salvarDados()">
+            <select name="numeros" id="num" required>
+                <option selected disabled value=""></option>
+                <option value="01">01</option>
+                <option value="02">02</option>
+                <option value="03">03</option>
+                <option value="04">04</option>
+                <option value="05">05</option>
+                <option value="06">06</option>
+                <option value="07">07</option>
+            </select>
 
-        <br><br>
-        <a>Selecione o número de pessoas</a><br>
-        <input type="number" id="numeroPess" min="1" max="15" required><br><br>
-        <input type="submit" value="Enviar" required>
-    </form><br>
+            <br><br><br>
+            <a>Selecione o número de pessoas</a><br><br>
+            <input type="number" id="numeroPess" min="1" max="15" required><br><br>
+            <input type="submit" value="Enviar" required>
+        </form>
+    </div><br>
 
 </body>
 
