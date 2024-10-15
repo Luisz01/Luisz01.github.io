@@ -1,0 +1,88 @@
+/* css do */
+
+body {
+    background: linear-gradient(to bottom, #2c455d, #000000);
+    color: #ffffff;
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Container do cardápio */
+.container {
+    width: 60%;
+    background: linear-gradient(to top, #1c6bb5, #023470);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+h1{
+    text-align: center;
+}
+/* Estilo dos títulos */
+ h2, h3 {
+    color: #ecf0f1;
+}
+
+/* Estilo para separar as seções */
+hr {
+    border: 1px solid #7f8c8d;
+}
+
+/* Estilo das opções de checkbox e inputs */
+label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    color: #bdc3c7;
+    
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+input[type="number"] {
+    width: 50px;
+    padding: 5px;
+    border-radius: 15px;
+    border: 1px solid #7f8c8d;
+    background-color: #1b2f42;
+    color: #ecf0f1;
+    text-align: center;
+}
+
+/* Botão de confirmar pedido */
+input[type="button"] {
+    background-color: #e45241;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+input[type="button"]:hover {
+    background-color: #ff1c03;
+}
+
+/* Estilo do link "Voltar" */
+a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 13px;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+a:hover {
+    text-decoration: underline;
+}

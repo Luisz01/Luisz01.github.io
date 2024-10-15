@@ -1,0 +1,56 @@
+/* css do index.html */
+.container {
+    width: 50%; 
+    margin: 100px auto; 
+    padding: 20px; 
+    border: 2px solid #100000; 
+    border-radius: 10px; 
+    background:linear-gradient(to bottom, #ec9c9c, #de4f4f); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    text-align: center; 
+}
+
+h1 {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 36px;
+    color: rgb(0, 0, 0);
+    letter-spacing: 2px;
+}
+
+hr {
+    border: 0;
+    height: 2px;
+    background: #000000;
+    margin: 20px auto;
+    width: 80%;
+}
+
+p, form, a {
+   font-family: 'Times New Roman', Times, serif;
+    font-size: 18px;
+    color: #000000;
+}
+
+input[type="submit"] {
+    background-color: #d41406;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #126016;
+}
+
+select, input[type="number"] {
+    padding: 10px;
+    width: 100px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+body{
+    background:linear-gradient(to bottom, #8f3939, #ff6666);
+}

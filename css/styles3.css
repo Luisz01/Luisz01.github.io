@@ -1,0 +1,47 @@
+/* css da visualização de ped */
+
+/* Fundo com degradê escuro */
+body {
+    background: linear-gradient(135deg, #083b6e, #4b79a1);
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Container para o conteúdo da página */
+.container {
+    width: 60%;
+    background-color: #2f70b2;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+/* Estilos dos títulos */
+h1 {
+    color: #ecf0f1;
+}
+
+/* Estilo para o link "Voltar ao Cardápio" */
+a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 16px;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo para a linha de separação */
+hr {
+    border: 1px solid #7f8c8d;
+}
