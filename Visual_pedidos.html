@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualizar Pedidos</title>
+    <link rel="stylesheet" < href="css/styles3.css">
+    
+
     <script>
         function carregarTodosPedidos() {
             const pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
@@ -62,10 +65,13 @@
 <body>
    
       </script>
-    <h1>Todos os Pedidos</h1>
-    <div id="todosPedidos"></div>
-    <hr>
-    <br><a href="menu.html">Voltar ao Cardápio</a>
+      <div class="container">
+        <h1>Todos os Pedidos</h1>
+        <div id="todosPedidos"></div>
+        <hr>
+        <a href="menu.html">Voltar ao Cardápio</a>
+    </div>
+
 </body>
 
 </html>
