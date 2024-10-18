@@ -9,24 +9,7 @@
     </href>
 
 
-    <script>
-        function salvarDados() {
-            const numMesa = document.getElementById("num").value;
-            const numPessoas = document.getElementById("numeroPess").value;
 
-            if (!numMesa || !numPessoas) {
-                alert("Por favor, preencha todos os campos.");
-                return false;
-            }
-
-            sessionStorage.setItem("numMesa", numMesa);
-            sessionStorage.setItem("numPessoas", numPessoas);
-
-            // Redirecionar para a página do menu
-            window.location.href = "menu.html";
-            return false; // Evita o envio do formulário padrão
-        }
-    </script>
 </head>
 
 <body>
@@ -51,6 +34,7 @@
             <a>Selecione o número de pessoas</a><br><br>
             <input type="number" id="numeroPess" min="1" max="15" required><br><br>
             <input type="submit" value="Enviar" required>
+            <script src="JS/scripts.js"></script>
         </form>
     </div><br>
 
