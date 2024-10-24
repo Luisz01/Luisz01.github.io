@@ -1,3 +1,4 @@
+//index.html
 function salvarDados() {
     // Obtém o valor do campo de input com id "num" (número da mesa) e armazena na variável 'numMesa'
     const numMesa = document.getElementById("num").value;
