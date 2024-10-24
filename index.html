@@ -2,25 +2,31 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>primeira_pagina</title>
-    <link rel="stylesheet" < href="css/styles1.css">
-    </href>
-
-
-
+    <!-- Link para o arquivo CSS externo -->
+    <link rel="stylesheet" href="css/styles1.css"> 
 </head>
 
 <body>
     <div class="container">
-        <h1>Bem-vindo</h1><br>
-        <hr>
-        <p>Selecione o número da mesa</p><br>
+        <!-- Título de boas-vindas -->
+        <h1>Bem-vindo</h1>
+        <br>
+        <hr> <!-- Linha horizontal para separação visual -->
+        
+        <!-- Texto explicativo para o usuário -->
+        <p>Selecione o número da mesa</p>
+        <br>
 
-        <form onsubmit="return salvarDados()">
-            <select name="numeros" id="num" required>
-                <option selected disabled value=""></option>
+        <!-- Formulário para a seleção do número da mesa e número de pessoas -->
+        <form onsubmit="return salvarDados()"> <!-- A função salvarDados será chamada ao enviar o formulário -->
+            
+            <!-- Seleção de número da mesa -->
+            <select name="numeros" id="num" required> <!-- Campo obrigatório de seleção -->
+                <option selected disabled value=""></option> <!-- Placeholder para a seleção -->
+                <!-- Opções numéricas para o número da mesa -->
                 <option value="01">01</option>
                 <option value="02">02</option>
                 <option value="03">03</option>
@@ -31,12 +37,22 @@
             </select>
 
             <br><br><br>
-            <a>Selecione o número de pessoas</a><br><br>
-            <input type="number" id="numeroPess" min="1" max="15" required><br><br>
-            <input type="submit" value="Enviar" required>
+            
+            <!-- Seleção do número de pessoas -->
+            <a>Selecione o número de pessoas</a>
+            <br><br>
+            <!-- Campo de input para o número de pessoas, limitado entre 1 e 15 -->
+            <input type="number" id="numeroPess" min="1" max="15" required> <!-- Campo obrigatório -->
+            <br><br>
+            
+            <!-- Botão de envio do formulário -->
+            <input type="submit" value="Enviar">
+            
+            <!-- Inclusão do script JavaScript externo -->
             <script src="JS/scripts.js"></script>
         </form>
-    </div><br>
+    </div>
+    <br>
 
 </body>
 
