@@ -2,96 +2,127 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardápio</title>
-    <link rel="stylesheet"< href="css/styles2.css"></href>
-    
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Cardápio</title> 
+
+    <!-- Link para o arquivo CSS externo -->
+    <link rel="stylesheet" href="css/styles2.css">
 </head>
 
 <body>
+    <!-- Container principal -->
     <div class="container">
-    <h1>Cardápio</h1>
-    <p id="infoMesa"></p>
-    <hr>
+        <!-- Título da página -->
+        <h1>Cardápio</h1>
 
-    <form>
-        <input type="checkbox" id="churrasco" onclick="calcularTotal()">
-        <label for="churrasco">
-            <h3>Churrasco -- quantidade <input type="number" id="quantidadeChurrasco" min="1" max="5" value="1"
-                    onchange="calcularTotal()"></h3>
-        </label>
-        <p>R$: 20,00</p>
+        <!-- Exibe as informações da mesa, que são carregadas pelo JavaScript -->
+        <p id="infoMesa"></p>
+
+        <hr> <!-- Linha horizontal para separar seções -->
+
+        <!-- Formulário para seleção dos pratos -->
+        <form>
+            <!-- Item 1: Churrasco -->
+            <input type="checkbox" id="churrasco" onclick="calcularTotal()"> <!-- Checkbox para selecionar o prato -->
+            <label for="churrasco"> <!-- Rótulo que descreve o prato -->
+                <h3>Churrasco -- quantidade 
+                    <!-- Campo numérico para selecionar a quantidade, com valor inicial 1 -->
+                    <input type="number" id="quantidadeChurrasco" min="1" max="5" value="1" onchange="calcularTotal()">
+                </h3>
+            </label>
+            <p>R$: 20,00</p> <!-- Preço do prato -->
+            <hr> 
+
+            <!-- Item 2: Mocotó -->
+            <input type="checkbox" id="mocoto" onclick="calcularTotal()">
+            <label for="mocoto">
+                <h3>Mocotó -- quantidade 
+                    <input type="number" id="quantidadeMocoto" min="1" max="5" value="1" onchange="calcularTotal()">
+                </h3>
+            </label>
+            <p>R$: 20,00</p>
+            <hr>
+
+            <!-- Item 3: Cozidão -->
+            <input type="checkbox" id="cozidao" onclick="calcularTotal()">
+            <label for="cozidao">
+                <h3>Cozidão -- quantidade 
+                    <input type="number" id="quantidadeCozidao" min="1" max="5" value="1" onchange="calcularTotal()">
+                </h3>
+            </label>
+            <p>R$: 20,00</p>
+            <hr>
+
+            <!-- Item 4: Assado de Panela -->
+            <input type="checkbox" id="assadoPanela" onclick="calcularTotal()">
+            <label for="assadoPanela">
+                <h3>Assado de Panela -- quantidade 
+                    <input type="number" id="quantidadeAssadoPanela" min="1" max="5" value="1" onchange="calcularTotal()">
+                </h3>
+            </label>
+            <p>R$: 20,00</p>
+            <hr>
+
+            <!-- Item 5: Bife Acebolado -->
+            <input type="checkbox" id="bifeAcebolado" onclick="calcularTotal()">
+            <label for="bifeAcebolado">
+                <h3>Bife Acebolado -- quantidade 
+                    <input type="number" id="quantidadeBifeAcebolado" min="1" max="5" value="1" onchange="calcularTotal()">
+                </h3>
+            </label>
+            <p>R$: 20,00</p>
+            <hr>
+
+            <!-- Item 6: Feijoada -->
+            <input type="checkbox" id="feijoada" onclick="calcularTotal()">
+            <label for="feijoada">
+                <h3>Feijoada -- quantidade 
+                    <input type="number" id="quantidadeFeijoada" min="1" max="5" value="1" onchange="calcularTotal()">
+                </h3>
+            </label>
+            <p>R$: 20,00</p>
+            <hr>
+
+            <!-- Item 7: Filé de Peixe Escabeche -->
+            <input type="checkbox" id="filePeixe" onclick="calcularTotal()">
+            <label for="filePeixe">
+                <h3>Filé de Peixe Escabeche -- quantidade 
+                    <input type="number" id="quantidadeFilePeixe" min="1" max="5" value="1" onchange="calcularTotal()">
+                </h3>
+            </label>
+            <p>R$: 20,00</p>
+            <hr>
+
+            <!-- Item 8: Fígado -->
+            <input type="checkbox" id="figado" onclick="calcularTotal()">
+            <label for="figado">
+                <h3>Fígado -- quantidade 
+                    <input type="number" id="quantidadeFigado" min="1" max="5" value="1" onchange="calcularTotal()">
+                </h3>
+            </label>
+            <p>R$: 20,00</p>
+            <hr>
+
+            <!-- Exibe o valor total do pedido calculado dinamicamente -->
+            <h3 id="valorTotal">Valor total: R$ 0,00</h3>
+
+            <!-- Botão para confirmar o pedido, que chama a função salvarPedido() -->
+            <input type="button" value="Confirmar Pedido" onclick="salvarPedido()">
+        </form>
+
+        <hr>
+        <!-- Seção para exibir os pedidos feitos -->
+        <h2>Seus Pedidos</h2>
+        <div id="statusPedidos"></div>
         <hr>
 
-        <input type="checkbox" id="mocoto" onclick="calcularTotal()">
-        <label for="mocoto">
-            <h3>Mocotó -- quantidade <input type="number" id="quantidadeMocoto" min="1" max="5" value="1"
-                    onchange="calcularTotal()"></h3>
-        </label>
-        <p>R$: 20,00</p>
-        <hr>
+        <!-- Link para voltar à página anterior -->
+        <br><a href="index.html">Voltar</a>
+    </div>
 
-        <input type="checkbox" id="cozidao" onclick="calcularTotal()">
-        <label for="cozidao">
-            <h3>Cozidão -- quantidade <input type="number" id="quantidadeCozidao" min="1" max="5" value="1"
-                    onchange="calcularTotal()"></h3>
-        </label>
-        <p>R$: 20,00</p>
-        <hr>
-
-        <input type="checkbox" id="assadoPanela" onclick="calcularTotal()">
-        <label for="assadoPanela">
-            <h3>Assado de Panela -- quantidade <input type="number" id="quantidadeAssadoPanela" min="1" max="5"
-                    value="1" onchange="calcularTotal()"></h3>
-        </label>
-        <p>R$: 20,00</p>
-        <hr>
-
-        <input type="checkbox" id="bifeAcebolado" onclick="calcularTotal()">
-        <label for="bifeAcebolado">
-            <h3>Bife Acebolado -- quantidade <input type="number" id="quantidadeBifeAcebolado" min="1" max="5" value="1"
-                    onchange="calcularTotal()"></h3>
-        </label>
-        <p>R$: 20,00</p>
-        <hr>
-
-        <input type="checkbox" id="feijoada" onclick="calcularTotal()">
-        <label for="feijoada">
-            <h3>Feijoada -- quantidade <input type="number" id="quantidadeFeijoada" min="1" max="5" value="1"
-                    onchange="calcularTotal()"></h3>
-        </label>
-        <p>R$: 20,00</p>
-        <hr>
-
-        <input type="checkbox" id="filePeixe" onclick="calcularTotal()">
-        <label for="filePeixe">
-            <h3>Filé de Peixe Escabeche -- quantidade <input type="number" id="quantidadeFilePeixe" min="1" max="5"
-                    value="1" onchange="calcularTotal()"></h3>
-        </label>
-        <p>R$: 20,00</p>
-        <hr>
-
-        <input type="checkbox" id="figado" onclick="calcularTotal()">
-        <label for="figado">
-            <h3>Fígado -- quantidade <input type="number" id="quantidadeFigado" min="1" max="5" value="1"
-                    onchange="calcularTotal()"></h3>
-        </label>
-        <p>R$: 20,00</p>
-        <hr>
-
-        <h3 id="valorTotal">Valor total: R$ 0,00</h3>
-
-        <input type="button" value="Confirmar Pedido" onclick="salvarPedido()">
-    </form>
-
-    <hr>
-    <h2>Seus Pedidos</h2>
-    <div id="statusPedidos"></div>
-    <hr>
-    <br><a href="index.html">Voltar</a></div>
-    <script src="JS/scripts2.js"> </script>
+    <!-- Script externo para as funcionalidades do formulário -->
+    <script src="JS/scripts2.js"></script>
 </body>
-
 
 </html>
