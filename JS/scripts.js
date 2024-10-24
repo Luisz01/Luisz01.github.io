@@ -1,18 +1,26 @@
+function salvarDados() {
+    // Obtém o valor do campo de input com id "num" (número da mesa) e armazena na variável 'numMesa'
+    const numMesa = document.getElementById("num").value;
 
-        function salvarDados() {
-            const numMesa = document.getElementById("num").value;
-            const numPessoas = document.getElementById("numeroPess").value;
+    // Obtém o valor do campo de input com id "numeroPess" (número de pessoas) e armazena na variável 'numPessoas'
+    const numPessoas = document.getElementById("numeroPess").value;
 
-            if (!numMesa || !numPessoas) {
-                alert("Por favor, preencha todos os campos.");
-                return false;
-            }
+    // Verifica se os campos 'numMesa' e 'numPessoas' estão vazios
+    if (!numMesa || !numPessoas) {
+        // Se algum campo estiver vazio, exibe um alerta para o usuário
+        alert("Por favor, preencha todos os campos.");
+        return false; // Interrompe a execução da função e impede o envio do formulário
+    }
 
-            sessionStorage.setItem("numMesa", numMesa);
-            sessionStorage.setItem("numPessoas", numPessoas);
+    // Armazena o número da mesa no 'sessionStorage' (dados são mantidos apenas enquanto a sessão do navegador estiver ativa)
+    sessionStorage.setItem("numMesa", numMesa);
 
-            // Redirecionar para a página do menu
-            window.location.href = "menu.html";
-            return false; // Evita o envio do formulário padrão
-        }
- 
+    // Armazena o número de pessoas no 'sessionStorage'
+    sessionStorage.setItem("numPessoas", numPessoas);
+
+    // Redireciona o usuário para a página "menu.html" após salvar os dados
+    window.location.href = "menu.html";
+
+    // Retorna 'false' para evitar o comportamento padrão do envio do formulário (caso esteja dentro de um form)
+    return false;
+}
