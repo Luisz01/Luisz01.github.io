@@ -1,4 +1,6 @@
-// menu.html
+// script de menu.html
+
+
 
 // Função para exibir os dados da mesa e número de pessoas salvos no sessionStorage
 function exibirDadosMesa() {
@@ -18,6 +20,10 @@ function exibirDadosMesa() {
         document.getElementById('infoMesa').innerText = "Informações da mesa não disponíveis.";
     }
 }
+
+
+
+
 
 // Função para calcular o valor total por pessoa
 function calcularValorTotal(numPessoas) {
@@ -52,6 +58,8 @@ function calcularTotal() {
     });
 
     // Exibe o valor total dos pratos e o valor por pessoa
+    const numPessoas = parseInt(sessionStorage.getItem("numPessoas")) || 0;
+
     document.getElementById('valorTotal').innerText = "Valor total: R$ " + (total + (25 * sessionStorage.getItem("numPessoas"))).toFixed(2);
 }
 
@@ -87,25 +95,32 @@ function salvarPedido() {
         }
     });
 
-    // Verifica se há pratos no pedido atual
     if (pedidoAtual.length > 0) {
         const numMesa = sessionStorage.getItem('numMesa');
         const numPessoas = sessionStorage.getItem('numPessoas');
-
-        // Adiciona o pedido ao array de pedidos e salva no localStorage
-        pedidos.push({
-            itens: pedidoAtual,
-            status: "Pendente",
-            mesa: numMesa || "Desconhecida",
-            numPessoas: numPessoas || "Desconhecido"
-        });
-        localStorage.setItem('pedidos', JSON.stringify(pedidos));
-        alert("Pedido salvo com sucesso!");
+    
+        if (numMesa) { // Verifica se numMesa está definido
+            const novoPedido = {
+                itens: pedidoAtual,
+                status: "Pendente",
+                mesa: numMesa,
+                numPessoas: numPessoas || "Desconhecido"
+            };
+    
+            // Salva o pedido no Firebase
+            set(ref(db, 'pedidos/' + userId + '/' + numMesa), novoPedido)
+                .then(() => {
+                    alert("Pedido salvo com sucesso!");
+                })
+                .catch((error) => {
+                    console.error("Erro ao salvar o pedido: ", error);
+                });
+        } else {
+            alert("Número da mesa não está definido.");
+        }
     } else {
-        // Exibe um alerta se nenhum prato foi selecionado
         alert("Nenhum prato selecionado.");
     }
-}
 
 // Função para carregar o status dos pedidos da mesa atual
 function carregarStatusPedidos() {
@@ -140,14 +155,43 @@ function carregarStatusPedidos() {
     }
 }
 
+
+
+
+ 
+
+      
+
+        if (pedidoAtual.length > 0) {
+            const numMesa = sessionStorage.getItem('numMesa');
+            const numPessoas = sessionStorage.getItem('numPessoas');
+
+            const novoPedido = {
+                itens: pedidoAtual,
+                status: "Pendente",
+                mesa: numMesa || "Desconhecida",
+                numPessoas: numPessoas || "Desconhecido"
+            };
+
+            // Salva o pedido no Firebase
+            set(ref(db, 'pedidos/' + userId + '/' + numMesa), novoPedido)
+                .then(() => {
+                    alert("Pedido salvo com sucesso!");
+                })
+                .catch((error) => {
+                    console.error("Erro ao salvar o pedido: ", error);
+                });
+        } else {
+            alert("Nenhum prato selecionado.");
+        }
+    }
+
+
 // Função que verifica mudanças no status dos pedidos a cada 5 segundos
-function verificarMudancasPedidos() {
-    setInterval(carregarStatusPedidos, 5000);
-}
 
 // Executa as funções assim que a página for carregada
 document.addEventListener('DOMContentLoaded', function () {
     exibirDadosMesa();
     carregarStatusPedidos();
-    verificarMudancasPedidos();
+    verificarMudancasPedidos(); 
 });
