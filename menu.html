@@ -32,42 +32,111 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        const userId = sessionStorage.getItem("userId") || "defaultUser";
+        const userId = sessionStorage.getItem("userId") || "cliente";
 
         const mesaRef = ref(db, 'mesas/' + userId); 
 
 
         window.salvarPedido = function salvarPedido() {
-        const userId = sessionStorage.getItem("userId") || "defaultUser";
+        const userId = sessionStorage.getItem("userId") || "cliente";
         const numMesa = sessionStorage.getItem('numMesa');
         const numPessoas = sessionStorage.getItem('numPessoas');
+
+        const itensSelecionados = [];
 
         // Cria a referência do pedido no Firebase
         const pedidoRef = ref(db, 'pedidos/' + userId + '/' + numMesa);
 
-        // Dados do pedido (exemplo básico)
-        const novoPedido = {
-            itens: [{ nome: "Churrasco", quantidade: 1, preco: 20 }],
-            status: "Pendente",
-            mesa: numMesa || "Desconhecida",
-            numPessoas: numPessoas || "Desconhecido"
-        };
 
-        // Salva o pedido no Firebase
-        set(pedidoRef, novoPedido)
+
+            const pratos = [
+        { id: 'churrasco', quantidadeId: 'quantidadeChurrasco', nome: 'Churrasco', preco: 20 },
+        { id: 'mocoto', quantidadeId: 'quantidadeMocoto', nome: 'Mocotó', preco: 20 },
+        { id: 'cozidao', quantidadeId: 'quantidadeCozidao', nome: 'Cozidão', preco: 20 },
+        { id: 'assadoPanela', quantidadeId: 'quantidadeAssadoPanela', nome: 'Assado de Panela', preco: 20 },
+        { id: 'bifeAcebolado', quantidadeId: 'quantidadeBifeAcebolado', nome: 'Bife Acebolado', preco: 20 },
+        { id: 'feijoada', quantidadeId: 'quantidadeFeijoada', nome: 'Feijoada', preco: 20 },
+        { id: 'filePeixe', quantidadeId: 'quantidadeFilePeixe', nome: 'Filé de Peixe Escabeche', preco: 20 },
+        { id: 'figado', quantidadeId: 'quantidadeFigado', nome: 'Fígado', preco: 20 }
+    ];
+
+    pratos.forEach(prato => {
+        const checkbox = document.getElementById(prato.id);
+        const quantidade = parseInt(document.getElementById(prato.quantidadeId).value) || 0;
+
+        if (checkbox.checked && quantidade > 0) {
+            itensSelecionados.push({
+                nome: prato.nome,
+                quantidade: quantidade,
+                preco: prato.preco,
+                total: quantidade * prato.preco
+            });
+        }
+    });
+
+
+    const novoPedido = {
+        itens: itensSelecionados,
+        status: "Pendente",
+        mesa: numMesa,
+        numPessoas: numPessoas
+    };
+
+    if (itensSelecionados.length > 0) {
+        set(ref(db, 'pedidos/' + userId + '/' + numMesa), novoPedido)
             .then(() => {
                 alert("Pedido salvo com sucesso!");
             })
             .catch((error) => {
                 console.error("Erro ao salvar o pedido: ", error);
             });
-    };
+    } else {
+        alert("Nenhum item selecionado.");
+    }
+};
+
+
+   /* status: "Pendente",
+    mesa: numMesa || "Desconhecida",
+    numPessoas: numPessoas || "Desconhecido"
+*/
+
+/*if (document.getElementById("churrasco").checked) {
+    novoPedido.itens.push({ nome: "Churrasco", quantidade: document.getElementById("quantidadeChurrasco").value, preco: 20 });
+}
+
+
+if (document.getElementById("mocoto").checked) {
+    novoPedido.itens.push({ nome: "Mocotó", quantidade: document.getElementById("quantidadeMocoto").value, preco: 20 });
+}
+if (document.getElementById("cozidao").checked) {
+    novoPedido.itens.push({ nome: "Cozidão", quantidade: document.getElementById("quantidadeCozidao").value, preco: 20 });
+}
+if (document.getElementById("assadoPanela").checked) {
+    novoPedido.itens.push({ nome: "Assado de Panela", quantidade: document.getElementById("quantidadeAssadoPanela").value, preco: 20 });
+}
+if (document.getElementById("bifeAcebolado").checked) {
+    novoPedido.itens.push({ nome: "Bife Acebolado", quantidade: document.getElementById("quantidadeBifeAcebolado").value, preco: 20 });
+}
+if (document.getElementById("feijoada").checked) {
+    novoPedido.itens.push({ nome: "Feijoada", quantidade: document.getElementById("quantidadeFeijoada").value, preco: 20 });
+}
+if (document.getElementById("filePeixe").checked) {
+    novoPedido.itens.push({ nome: "Filé de Peixe Escabeche", quantidade: document.getElementById("quantidadeFilePeixe").value, preco: 20 });
+}
+if (document.getElementById("figado").checked) {
+    novoPedido.itens.push({ nome: "Fígado", quantidade: document.getElementById("quantidadeFigado").value, preco: 20 });
+}*/
+
+
+
+        
 </script>
 
         
        
 
-    </script>
+
 
 
 
