@@ -31,24 +31,25 @@
         // Inicializa o Firebase
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-
+        // Obtém o ID do usuário a partir do sessionStorage ou define como "cliente" se não existir
         const userId = sessionStorage.getItem("userId") || "cliente";
-
+        // Cria uma referência para a mesa do usuário no banco de dados
         const mesaRef = ref(db, 'mesas/' + userId); 
 
-
+        // Função para salvar um pedido
         window.salvarPedido = function salvarPedido() {
+              // Obtém o ID do usuário, o número da mesa e o número de pessoas
         const userId = sessionStorage.getItem("userId") || "cliente";
         const numMesa = sessionStorage.getItem('numMesa');
         const numPessoas = sessionStorage.getItem('numPessoas');
 
-        const itensSelecionados = [];
+        const itensSelecionados = [];  // Array para armazenar os itens selecionados
 
         // Cria a referência do pedido no Firebase
         const pedidoRef = ref(db, 'pedidos/' + userId + '/' + numMesa);
 
 
-
+                // Define os pratos disponíveis com suas informações
             const pratos = [
         { id: 'churrasco', quantidadeId: 'quantidadeChurrasco', nome: 'Churrasco', preco: 20 },
         { id: 'mocoto', quantidadeId: 'quantidadeMocoto', nome: 'Mocotó', preco: 20 },
@@ -60,10 +61,12 @@
         { id: 'figado', quantidadeId: 'quantidadeFigado', nome: 'Fígado', preco: 20 }
     ];
 
+              // Loop pelos pratos para verificar quais foram selecionados
     pratos.forEach(prato => {
         const checkbox = document.getElementById(prato.id);
         const quantidade = parseInt(document.getElementById(prato.quantidadeId).value) || 0;
 
+         // Se o prato estiver selecionado e a quantidade for maior que 0, adiciona ao array de itens selecionados
         if (checkbox.checked && quantidade > 0) {
             itensSelecionados.push({
                 nome: prato.nome,
@@ -75,6 +78,7 @@
     });
 
 
+            // Cria um objeto para o novo pedido
     const novoPedido = {
         itens: itensSelecionados,
         status: "Pendente",
@@ -82,6 +86,7 @@
         numPessoas: numPessoas
     };
 
+             // Verifica se há itens selecionados para salvar o pedido
     if (itensSelecionados.length > 0) {
         set(ref(db, 'pedidos/' + userId + '/' + numMesa), novoPedido)
             .then(() => {
