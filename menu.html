@@ -11,6 +11,66 @@
 </head>
 
 <body>
+    <script type="module">
+        // Importa as funções necessárias do Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+    
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDvtCjt2o7duNytvPEBm-a0S91MzUebOMk",
+            authDomain: "restaurante-f6b4d.firebaseapp.com",
+            databaseURL: "https://restaurante-f6b4d-default-rtdb.firebaseio.com",
+            projectId: "restaurante-f6b4d",
+            storageBucket: "restaurante-f6b4d.appspot.com",
+            messagingSenderId: "125626296544",
+            appId: "1:125626296544:web:64aabf1080540820e4c885",
+            measurementId: "G-M2P5QVS8DB"
+        };
+    
+        // Inicializa o Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        const userId = sessionStorage.getItem("userId") || "defaultUser";
+
+        const mesaRef = ref(db, 'mesas/' + userId); 
+
+
+        window.salvarPedido = function salvarPedido() {
+        const userId = sessionStorage.getItem("userId") || "defaultUser";
+        const numMesa = sessionStorage.getItem('numMesa');
+        const numPessoas = sessionStorage.getItem('numPessoas');
+
+        // Cria a referência do pedido no Firebase
+        const pedidoRef = ref(db, 'pedidos/' + userId + '/' + numMesa);
+
+        // Dados do pedido (exemplo básico)
+        const novoPedido = {
+            itens: [{ nome: "Churrasco", quantidade: 1, preco: 20 }],
+            status: "Pendente",
+            mesa: numMesa || "Desconhecida",
+            numPessoas: numPessoas || "Desconhecido"
+        };
+
+        // Salva o pedido no Firebase
+        set(pedidoRef, novoPedido)
+            .then(() => {
+                alert("Pedido salvo com sucesso!");
+            })
+            .catch((error) => {
+                console.error("Erro ao salvar o pedido: ", error);
+            });
+    };
+</script>
+
+        
+       
+
+    </script>
+
+
+
     <!-- Container principal -->
     <div class="container">
         <!-- Título da página -->
