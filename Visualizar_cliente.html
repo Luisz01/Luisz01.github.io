@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Pedidos</title>
+
+    <!-- Link para o arquivo CSS externo -->
+    <link rel="stylesheet" href="css/styles4.css">
+</head>
+
+<body>
+    <h1>Pedidos Realizados</h1><br>
+    <div id="pedidosContainer"></div> <!-- Contêiner para exibir os pedidos -->
+
+    <!-- Script para conectar ao Firebase e buscar os pedidos -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDvtCjt2o7duNytvPEBm-a0S91MzUebOMk",
+            authDomain: "restaurante-f6b4d.firebaseapp.com",
+            databaseURL: "https://restaurante-f6b4d-default-rtdb.firebaseio.com",
+            projectId: "restaurante-f6b4d",
+            storageBucket: "restaurante-f6b4d.appspot.com",
+            messagingSenderId: "125626296544",
+            appId: "1:125626296544:web:64aabf1080540820e4c885",
+            measurementId: "G-M2P5QVS8DB"
+        };
+
+        // Inicializa o Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Referência para o nó "pedidos" no Firebase
+        const pedidosRef = ref(db, 'pedidos');
+
+        // Função para exibir os pedidos
+        function exibirPedidos(snapshot) {
+            const pedidosContainer = document.getElementById("pedidosContainer");
+            pedidosContainer.innerHTML = ""; // Limpa o conteúdo anterior
+
+            snapshot.forEach(mesaSnapshot => {
+                const mesaId = mesaSnapshot.key;
+                const mesaPedidos = mesaSnapshot.val();
+
+                for (const pedidoId in mesaPedidos) {
+                    const pedido = mesaPedidos[pedidoId];
+                    const pedidoElement = document.createElement("div");
+                    pedidoElement.classList.add("pedido");
+
+                    pedidoElement.innerHTML = `
+                        <h2>Mesa: ${pedido.mesa}</h2>
+                        <p><strong>Número de Pessoas:</strong> ${pedido.numPessoas}</p>
+                        <p><strong>Status:</strong> ${pedido.status}</p>
+                        <h3>Itens:</h3>
+                        <ul>
+                            ${pedido.itens.map(item => `
+                                <li>${item.nome} - Quantidade: ${item.quantidade} - Preço: R$${item.preco.toFixed(2)} - Total: R$${item.total.toFixed(2)}</li>
+                            `).join("")}
+                        </ul>
+                        <button onclick="excluirPedido('${mesaId}', '${pedidoId}')">Marcar como entregue</button>
+                        <hr>
+                    `;
+
+                    pedidosContainer.appendChild(pedidoElement);
+                }
+            });
+        }
+
+        // Função para excluir um pedido do Firebase
+        window.excluirPedido = function(mesaId, pedidoId) {
+            const pedidoRef = ref(db, `pedidos/${mesaId}/${pedidoId}`);
+
+            if (confirm("Deseja marcar como entregue?")) {
+                remove(pedidoRef)
+                    .then(() => {
+                        alert("Pedido entregue!");
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao excluir o pedido: ", error);
+                    });
+            }
+        };
+
+        // Listener para buscar e atualizar os dados de pedidos em tempo real
+        onValue(pedidosRef, (snapshot) => {
+            if (snapshot.exists()) {
+                exibirPedidos(snapshot);
+            } else {
+                document.getElementById("pedidosContainer").innerText = "Nenhum pedido encontrado.";
+            }
+        });
+    </script>
+</body>
+
+</html>
